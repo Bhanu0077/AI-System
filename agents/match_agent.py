@@ -18,9 +18,5 @@ def match_agent(influencer, niche, audience):
 
     return False
 
-def match(influencer, target_niche):
-    result = influencer["niche"] == target_niche
-
-    log(f"[MatchAgent] {influencer['name']} → {'MATCH' if result else 'NO MATCH'}")
-
-    return result
+def match(influencer, query):
+    return query.lower() in influencer["niche"].lower()

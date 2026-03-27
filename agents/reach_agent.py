@@ -1,3 +1,4 @@
+
 def reach_agent(influencer):
     """
     Returns a score = followers * (engagement / 100)
@@ -9,3 +10,8 @@ def reach_agent(influencer):
     score = followers * (engagement / 100)
 
     return score
+
+
+# Alias for compatibility (IMPORTANT)
+def compute_reach(influencer):
+    return reach_agent(influencer)

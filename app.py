@@ -60,13 +60,29 @@ def run():
     if 'user' not in session:
         return redirect('/login')
 
+    query = request.form.get("query")
+    platform = request.form.get("platform")
+    budget_value = request.form.get("budget")
+    audience = request.form.get("audience")
+    awareness = request.form.get("awareness")
+
+    try:
+        budget = int(budget_value)
+        if budget <= 0:
+            return "Please enter a valid budget"
+    except:
+        return "Invalid budget"
+
     data = {
-        "query": request.form.get("query"),
-        "platform": request.form.get("platform"),
-        "budget": int(request.form.get("budget")),
-        "audience": request.form.get("audience"),
-        "awareness": request.form.get("awareness")
+        "query": query,
+        "platform": platform,
+        "budget": budget,
+        "audience": audience,
+        "awareness": awareness
     }
+
+    from utils.logger import log
+    log(f"[WEB] Received input: {data}")
 
     result = run_pipeline(data)
 

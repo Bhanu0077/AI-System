@@ -10,10 +10,13 @@ def run_pipeline(input_data):
     from engine.decision import rank_influencers, select_top
     from actions.outreach import simulate_outreach
     from actions.monitor import simulate_performance
+    from data.influencers import influencers
+    from engine.selector import filter_influencers
+    from data.influencers import influencers as influencer_data
 
-    influencers = filter_influencers(input_data)
+    filtered = filter_influencers(input_data, influencer_data)
 
-    ranked = rank_influencers(influencers)
+    ranked = rank_influencers(filtered) 
 
     selected, cost = select_top(ranked, input_data["budget"])
 

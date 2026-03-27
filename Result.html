@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #FAF3E0;
+        }
+
+        h1,
+        h2 {
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .btn {
+            background: #5f5e5e;
+            color: white;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+
+    <!-- HEADER -->
+    <header class="flex justify-center items-center py-6 mt-4">
+        <h1 class="text-2xl font-extrabold tracking-wide">BrandFluence</h1>
+    </header>
+
+    <!-- DASHBOARD -->
+    <main class="flex justify-center px-6">
+        <div class="w-full max-w-lg bg-white/60 backdrop-blur-md p-6 rounded-xl shadow">
+
+            <h2 class="text-2xl font-extrabold mb-6">Find Your Perfect Sponsorship 🤝 </h2>
+
+            <form action="/run" method="POST" class="space-y-4">
+
+                <!-- WHAT ARE YOU LOOKING FOR -->
+                <input name="query" type="text" placeholder="What are you looking for?"
+                    class="w-full p-3 rounded bg-gray-100 focus:outline-none">
+
+                <!-- FILTERS -->
+                <select name="platform" class="w-full p-3 rounded bg-gray-100">
+                    <option>Choose Platform</option>
+                    <option>Instagram</option>
+                    <option>YouTube</option>
+                    <option>Twitter</option>
+                </select>
+
+                <!-- BUDGET -->
+                <input name="budget" type="number" placeholder="Budget (₹)" class="w-full p-3 rounded bg-gray-100">
+
+                <!-- TARGET AUDIENCE -->
+                <input name="audience" type="text" placeholder="Target Audience (e.g. Students, Tech lovers)"
+                    class="w-full p-3 rounded bg-gray-100">
+
+                <!-- MASS AWARENESS -->
+                <select name="awareness" class="w-full p-3 rounded bg-gray-100">
+                    <option>Mass Awareness Level</option>
+                    <option>Low</option>
+                    <option>Medium</option>
+                    <option>High</option>
+                </select>
+
+                <!-- SUBMIT -->
+                <button type="submit" class="btn w-full p-3 rounded font-bold">
+                    Generate Strategy 🚀
+                </button>
+
+            </form>
+
+        </div>
+    </main>
+
+</body>
+
+</html>

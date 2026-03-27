@@ -16,5 +16,5 @@ def within_budget(influencer, budget):
     result = influencer["cost"] <= budget
 
     log(f"[BudgetAgent] {influencer['name']} → {'OK' if result else 'TOO EXPENSIVE'}")
-
+    print(influencer["name"], influencer["cost"], budget)
     return result
