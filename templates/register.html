@@ -47,22 +47,23 @@
     </div>
 
     <!-- FORM -->
-    <div class="space-y-4">
+    <form action="/register" method="POST" class="space-y-4">
 
-      <input type="text" placeholder="Full Name"
-        class="w-full p-3 rounded bg-gray-100 focus:outline-none">
+  <input name="name" type="text" placeholder="Full Name"
+    class="w-full p-3 rounded bg-gray-100 focus:outline-none" required>
 
-      <input type="email" placeholder="Email Address"
-        class="w-full p-3 rounded bg-gray-100 focus:outline-none">
+  <input name="email" type="email" placeholder="Email Address"
+    class="w-full p-3 rounded bg-gray-100 focus:outline-none" required>
 
-      <input type="password" placeholder="Password"
-        class="w-full p-3 rounded bg-gray-100 focus:outline-none">
+  <input name="password" type="password" placeholder="Password"
+    class="w-full p-3 rounded bg-gray-100 focus:outline-none" required>
 
-      <a href="./dashboard.html" 
-   class="btn w-full p-3 rounded font-bold block text-center">
-  Create Account
-</a>
-        
+  <!-- SUBMIT BUTTON -->
+  <button type="submit" class="btn w-full p-3 rounded font-bold">
+    Create Account
+  </button>
+
+</form>
       <!-- DIVIDER -->
       <div class="flex items-center gap-2 text-xs text-gray-400 my-4">
         <hr class="flex-grow"> OR <hr class="flex-grow">
@@ -72,7 +73,7 @@
     <!-- FOOTER -->
     <p class="text-center text-sm text-gray-500 mt-8">
       Already have an account?
-      <a href="./login.html" class="font-bold text-black">Login</a>
+     <a href="/login" class="font-bold text-black">Login</a> 
     </p>
 
   </div>
