@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session
 from core import run_pipeline
-
+users = {}
 app = Flask(__name__, template_folder="templates")
 app.secret_key = "secret123"
 
@@ -16,15 +16,15 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        # TEMP LOGIN
-        if email == "test@gmail.com" and password == "1234":
-            session['user'] = email
+        user = users.get(email)
+
+        if user and user['password'] == password:
+            session['user'] = user['name']
             return redirect('/dashboard')
         else:
             return "Invalid credentials ❌"
 
     return render_template('login.html')
-
 # ---------------- REGISTER ----------------
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -33,11 +33,17 @@ def register():
         email = request.form['email']
         password = request.form['password']
 
-        # TODO: store in DB later
+        if email in users:
+            return "User already exists ❌"
+
+        users[email] = {
+            "name": name,
+            "password": password
+        }
+
         return redirect('/login')
 
     return render_template('register.html')
-
 # ---------------- DASHBOARD ----------------
 @app.route('/dashboard')
 def dashboard():
