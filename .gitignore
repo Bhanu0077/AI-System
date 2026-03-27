@@ -1,0 +1,47 @@
+# 🔹 Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 🔹 Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# 🔹 Environment variables
+.env
+
+# 🔹 VS Code settings
+.vscode/
+
+# 🔹 JetBrains IDEs (PyCharm etc.)
+.idea/
+
+# 🔹 OS files
+.DS_Store
+Thumbs.db
+
+# 🔹 Logs
+*.log
+
+
+# 🔹 Coverage / test reports
+.coverage
+htmlcov/
+
+# 🔹 Build / dist
+build/
+dist/
+*.egg-info/
+
+# 🔹 Temporary files
+*.tmp
+*.bak
+
+# 🔹 Streamlit cache
+.streamlit/
+
+# 🔹 Python compiled files
+*.pyo
+*.pyd
