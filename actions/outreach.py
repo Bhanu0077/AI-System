@@ -1,5 +1,7 @@
 # actions/outreach.py
 
+from utils.logger import log
+
 def generate_outreach_message(influencer, campaign_goal, niche):
     """
     Input:
@@ -51,3 +53,9 @@ def simulate_outreach(influencer):
         "response_time": response_time,
         "accepted": accepted
     }
+
+def simulate_outreach(selected):
+    log(f"[Outreach] Sending messages to {len(selected)} influencers")
+
+    for inf in selected:
+        log(f"[Outreach] Message sent to {inf['name']}")

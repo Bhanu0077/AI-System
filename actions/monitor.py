@@ -1,5 +1,6 @@
 # actions/monitor.py
 
+from utils.logger import log
 import random
 
 
@@ -46,3 +47,13 @@ def update_profile(profile):
     profile["engagement"] = max(0, min(profile["engagement"], 100))
 
     return profile
+
+def simulate_performance(selected):
+    performance = {
+        "reach": sum(i["followers"] for i in selected),
+        "engagement": round(random.uniform(5, 10), 2)
+    }
+
+    log(f"[Monitor] Performance: {performance}")
+
+    return performance

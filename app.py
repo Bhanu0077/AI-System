@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, redirect, session
 from core import run_pipeline
+from utils.logger import setup_logger
+
+setup_logger()
 users = {}
 app = Flask(__name__, template_folder="templates")
 app.secret_key = "secret123"

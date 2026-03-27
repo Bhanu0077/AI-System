@@ -1,5 +1,6 @@
 # engine/decision.py
 
+from utils.logger import log
 from agents.reach_agent import reach_agent
 
 
@@ -25,26 +26,16 @@ def rank_influencers(influencers):
     return ranked
 
 
-def select_top_influencers(ranked_list, budget):
-    """
-    Select top influencers within budget
-    Return selected list
-    """
-
+def select_top(influencers, budget):
     selected = []
-    total_spent = 0
+    total_cost = 0
 
-    for influencer in ranked_list:
-        cost = influencer.get("cost", 0)
+    for inf in influencers:
+        if total_cost + inf["cost"] <= budget:
+            selected.append(inf)
+            total_cost += inf["cost"]
 
-        if total_spent + cost <= budget:
-            selected.append(influencer)
-            total_spent += cost
-        else:
-            continue
-
-    return selected
-
+    return selected, total_cost
 
 def generate_reason(influencer):
     """
@@ -63,3 +54,6 @@ def generate_reason(influencer):
     )
 
     return reason
+
+def rank_influencers(influencers):
+    return sorted(influencers, key=lambda x: x["reach_score"], reverse=True)

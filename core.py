@@ -1,6 +1,13 @@
+from utils.logger import log
+
 def run_pipeline(input_data):
+
+    log("=================================")
+    log("NEW CAMPAIGN STARTED")
+    log(f"Input: {input_data}")
+
     from engine.selector import filter_influencers
-    from engine.decision import rank_influencers, select_top, generate_reasoning
+    from engine.decision import rank_influencers, select_top
     from actions.outreach import simulate_outreach
     from actions.monitor import simulate_performance
 
@@ -8,18 +15,18 @@ def run_pipeline(input_data):
 
     ranked = rank_influencers(influencers)
 
-    selected, total_cost = select_top(ranked, input_data["budget"])
+    selected, cost = select_top(ranked, input_data["budget"])
 
-    reasoning = generate_reasoning(selected)
+    log(f"[Selection] Selected {len(selected)} influencers | Cost: {cost}")
 
-    outreach = simulate_outreach(selected)
+    simulate_outreach(selected)
 
     performance = simulate_performance(selected)
 
+    log("CAMPAIGN COMPLETED")
+    log("=================================")
+
     return {
         "selected": selected,
-        "cost": total_cost,
-        "reasoning": reasoning,
-        "outreach": outreach,
         "performance": performance
     }

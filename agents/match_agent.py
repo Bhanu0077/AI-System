@@ -1,3 +1,5 @@
+from utils.logger import log
+
 def match_agent(influencer, niche, audience):
     """
     Returns True if influencer matches niche and audience, else False
@@ -15,3 +17,10 @@ def match_agent(influencer, niche, audience):
         return True
 
     return False
+
+def match(influencer, target_niche):
+    result = influencer["niche"] == target_niche
+
+    log(f"[MatchAgent] {influencer['name']} → {'MATCH' if result else 'NO MATCH'}")
+
+    return result

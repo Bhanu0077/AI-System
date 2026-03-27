@@ -2,6 +2,7 @@
 
 from agents.match_agent import match_agent
 from agents.budget_agent import budget_agent
+from utils.logger import log
 
 
 def filter_influencers(influencers, niche, audience, budget):
@@ -29,3 +30,13 @@ def filter_influencers(influencers, niche, audience, budget):
             continue
 
     return valid_influencers
+
+def filter_influencers(input_data):
+    log("[Selector] Starting filtering process")
+
+    # your logic
+    filtered = []
+
+    log(f"[Selector] {len(filtered)} influencers passed filtering")
+
+    return filtered
