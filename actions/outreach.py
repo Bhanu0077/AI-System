@@ -1,61 +1,98 @@
 # actions/outreach.py
 
-from utils.logger import log
+# from utils.logger import log
+import os
+from openai import OpenAI
 
-def generate_outreach_message(influencer, campaign_goal, niche):
-    """
-    Input:
-        influencer (dict)
-        campaign_goal (str)
-        niche (str)
 
-    Output:
-        str (personalized outreach message)
-    """
+def get_client():
+    api_key = os.getenv("FEATHERLESS_API_KEY")
 
-    name = influencer.get("name", "Creator")
-    platform = influencer.get("platform", "your platform")
+    if not api_key:
+        return None
 
-    message = (
-        f"Hi {name},\n\n"
-        f"We love your content on {platform}, especially in the {niche} space.\n"
-        f"We are planning a campaign focused on '{campaign_goal}' and believe you would be a great fit.\n\n"
-        f"We'd love to collaborate with you for this campaign. Let us know if you're interested!\n\n"
-        f"Best regards,\n"
-        f"Brand Team"
+    return OpenAI(
+        api_key=api_key,
+        base_url="https://api.featherless.ai/v1"
     )
 
-    return message
 
+def generate_email(influencer, goal, niche):
 
-def simulate_outreach(influencer):
+    client = get_client()
+
+    if client is None:
+        return "❌ API key not set"
+
+    prompt = f"""
+    Write a short professional collaboration email.
+
+    Influencer Name: {influencer['name']}
+    Platform: {influencer['platform']}
+    Niche: {niche}
+    Campaign Goal: {goal}
+
+    Keep it under 80 words.
     """
-    Input:
-        influencer (dict)
 
-    Output:
-        dict with:
-            - status (str)
-            - response_time (int)
-            - accepted (bool)
-    """
+    try:
+        response = client.chat.completions.create(
+            model="openchat-3.5",   # 🔥 safer model
+            messages=[
+                {"role": "system", "content": "You write short outreach emails."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7
+        )
 
-    import random
+        return response.choices[0].message.content.strip()
 
-    statuses = ["sent", "seen", "replied"]
+    except Exception as e:
+        return f"❌ Failed: {e}"
 
-    status = random.choice(statuses)
-    response_time = random.randint(1, 24)  # hours
-    accepted = random.choice([True, False])
 
-    return {
-        "status": status,
-        "response_time": response_time,
-        "accepted": accepted
+
+# def simulate_outreach(influencer):
+#     """
+#     Input:
+#         influencer (dict)
+
+#     Output:
+#         dict with:
+#             - status (str)
+#             - response_time (int)
+#             - accepted (bool)
+#     """
+
+#     import random
+
+#     statuses = ["sent", "seen", "replied"]
+
+#     status = random.choice(statuses)
+#     response_time = random.randint(1, 24)  # hours
+#     accepted = random.choice([True, False])
+
+#     return {
+#         "status": status,
+#         "response_time": response_time,
+#         "accepted": accepted
+#     }
+
+# def simulate_outreach(selected):
+#     log(f"[Outreach] Sending messages to {len(selected)} influencers")
+
+#     for inf in selected:
+#         log(f"[Outreach] Message sent to {inf['name']}")
+
+
+if __name__ == "__main__":
+
+    influencer = {
+        "name": "TechGuru",
+        "platform": "Instagram"
     }
 
-def simulate_outreach(selected):
-    log(f"[Outreach] Sending messages to {len(selected)} influencers")
+    result = generate_email(influencer, "Awareness", "tech")
 
-    for inf in selected:
-        log(f"[Outreach] Message sent to {inf['name']}")
+    print("\n📧 EMAIL OUTPUT:\n")
+    print(result)
