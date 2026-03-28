@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, session
 from core import run_pipeline
 from utils.logger import setup_logger
+import sys, os
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 setup_logger()
 users = {}

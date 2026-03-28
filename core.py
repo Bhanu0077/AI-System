@@ -10,10 +10,10 @@ def run_pipeline(input_data):
     from engine.decision import rank_influencers, select_top
     from actions.outreach import simulate_outreach
     from actions.monitor import simulate_performance
-    from data.influencers import influencers
+    from data.influencers import get_influencers
     from engine.selector import filter_influencers
-    from data.influencers import influencers as influencer_data
-
+    from data.influencers import get_influencers as influencer_data
+    influencer_data = get_influencers(count=100, niche=input_data["query"])
     filtered = filter_influencers(input_data, influencer_data)
 
     ranked = rank_influencers(filtered) 
