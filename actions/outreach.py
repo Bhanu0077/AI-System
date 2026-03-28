@@ -1,16 +1,14 @@
 # actions/outreach.py
 
-# from utils.logger import log
 import os
+import random
 from openai import OpenAI
 
 
 def get_client():
     api_key = os.getenv("FEATHERLESS_API_KEY")
-
     if not api_key:
         return None
-
     return OpenAI(
         api_key=api_key,
         base_url="https://api.featherless.ai/v1"
@@ -18,9 +16,7 @@ def get_client():
 
 
 def generate_email(influencer, goal, niche):
-
     client = get_client()
-
     if client is None:
         return "❌ API key not set"
 
@@ -37,62 +33,44 @@ def generate_email(influencer, goal, niche):
 
     try:
         response = client.chat.completions.create(
-            model="openchat-3.5",   # 🔥 safer model
+            model="openchat-3.5",
             messages=[
                 {"role": "system", "content": "You write short outreach emails."},
                 {"role": "user", "content": prompt}
             ],
             temperature=0.7
         )
-
         return response.choices[0].message.content.strip()
 
     except Exception as e:
         return f"❌ Failed: {e}"
 
 
+def simulate_outreach(influencer):
+    """
+    Input:
+        influencer (dict)
 
-# def simulate_outreach(influencer):
-#     """
-#     Input:
-#         influencer (dict)
+    Output:
+        dict with:
+            - status (str)
+            - response_time (int)
+            - accepted (bool)
+    """
+    statuses = ["sent", "seen", "replied"]
 
-#     Output:
-#         dict with:
-#             - status (str)
-#             - response_time (int)
-#             - accepted (bool)
-#     """
-
-#     import random
-
-#     statuses = ["sent", "seen", "replied"]
-
-#     status = random.choice(statuses)
-#     response_time = random.randint(1, 24)  # hours
-#     accepted = random.choice([True, False])
-
-#     return {
-#         "status": status,
-#         "response_time": response_time,
-#         "accepted": accepted
-#     }
-
-# def simulate_outreach(selected):
-#     log(f"[Outreach] Sending messages to {len(selected)} influencers")
-
-#     for inf in selected:
-#         log(f"[Outreach] Message sent to {inf['name']}")
+    return {
+        "status": random.choice(statuses),
+        "response_time": random.randint(1, 24),  # hours
+        "accepted": random.choice([True, False])
+    }
 
 
 if __name__ == "__main__":
-
     influencer = {
         "name": "TechGuru",
         "platform": "Instagram"
     }
-
     result = generate_email(influencer, "Awareness", "tech")
-
     print("\n📧 EMAIL OUTPUT:\n")
     print(result)
